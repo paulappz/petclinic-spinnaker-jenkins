@@ -14,9 +14,6 @@ pipeline {
         }
 
          stage('Build Docker Image') {
-            when {
-                branch 'dev'
-            }
             steps { 
                 script{
                  app = docker.build("petclinic-spinnaker-jenkins")
