@@ -4,7 +4,15 @@ pipeline {
     options {
         skipStagesAfterUnstable()
     }
+    
     stages {
+        
+        stage('Build Application') { 
+            steps {
+                echo '=== Building Petclinic Application ==='
+                sh 'mvn -B -DskipTests clean package' 
+            }
+        } 
          stage('Clone repository') { 
             steps { 
                 script{
@@ -45,11 +53,9 @@ pipeline {
         }
         stage('Remove local images') {
             steps {
-                echo '=== Delete the local docker images ==='
-                
+                echo '=== Delete the local docker images ==='   
+                sh("docker rmi -f 249506596551.dkr.ecr.us-east-1.amazonaws.com/petclinic-spinnaker-jenkins:lastest || :")    
                 sh("docker rmi -f 249506596551.dkr.ecr.us-east-1.amazonaws.com/petclinic-spinnaker-jenkins:$SHORT_COMMIT || :")
-                sh("docker rmi -f 249506596551.dkr.ecr.us-east-1.amazonaws.com/petclinic-spinnaker-jenkins:latest || :")
-                sh("docker rmi -f 64608f1d6394")
         
                 sh("docker image ls")
             }
