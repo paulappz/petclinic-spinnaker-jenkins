@@ -49,6 +49,8 @@ pipeline {
                 
                 sh("docker rmi -f 249506596551.dkr.ecr.us-east-1.amazonaws.com/petclinic-spinnaker-jenkins:$SHORT_COMMIT || :")
                 sh("docker rmi -f 249506596551.dkr.ecr.us-east-1.amazonaws.com/petclinic-spinnaker-jenkins:latest || :")
+                sh("docker rmi 64608f1d6394")
+        
                 sh("docker image ls")
             }
         }
