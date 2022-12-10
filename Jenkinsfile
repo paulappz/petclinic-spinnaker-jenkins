@@ -49,7 +49,7 @@ pipeline {
                     SHORT_COMMIT = "${GIT_COMMIT_HASH[0..7]}"
                     docker.withRegistry('https://249506596551.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws-credentials') {
                         app.push("$SHORT_COMMIT")
-                        app.push("latest")
+                        // app.push("latest")
                     }
                 }
             }
@@ -57,7 +57,7 @@ pipeline {
         stage('Remove local images') {
             steps {
                 echo '=== Delete the local docker images ==='   
-                sh("docker rmi -f 249506596551.dkr.ecr.us-east-1.amazonaws.com/petclinic-spinnaker-jenkins:lastest || :")    
+                // sh("docker rmi -f 249506596551.dkr.ecr.us-east-1.amazonaws.com/petclinic-spinnaker-jenkins:lastest || :")    
                 sh("docker rmi -f 249506596551.dkr.ecr.us-east-1.amazonaws.com/petclinic-spinnaker-jenkins:$SHORT_COMMIT || :")
         
                 sh("docker image ls")
