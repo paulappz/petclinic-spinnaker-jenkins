@@ -6,14 +6,8 @@ pipeline {
     }
     
     stages {
-        
-        stage('Build Application') { 
-            steps {
-                echo '=== Building Petclinic Application ==='
-                sh 'mvn -B -DskipTests clean package' 
-            }
-        } 
-         stage('Clone repository') { 
+
+        stage('Clone repository') { 
             steps { 
                 script{
                 checkout scm
@@ -21,6 +15,25 @@ pipeline {
             }
         }
 
+        stage('Test Application') {
+            steps {
+                echo '=== Testing Petclinic Application ==='
+                // sh 'mvn test'
+            }
+        // post {
+        //     always {
+        //         junit 'target/surefire-reports/*.xml'
+        //     }
+        // }
+    }
+
+        stage('Build Application') { 
+            steps {
+                echo '=== Building Petclinic Application ==='
+                sh 'mvn -B -DskipTests clean package' 
+            }
+        } 
+   
          stage('Build Docker Image') {
             steps { 
                 script{
@@ -28,17 +41,7 @@ pipeline {
                 }
             }
         }
-            stage('Test Application') {
-        steps {
-            echo '=== Testing Petclinic Application ==='
-            // sh 'mvn test'
-        }
-        // post {
-        //     always {
-        //         junit 'target/surefire-reports/*.xml'
-        //     }
-        // }
-    }
+
          stage('Push') {
             steps {
                 script{
