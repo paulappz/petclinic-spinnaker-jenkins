@@ -45,7 +45,7 @@ pipeline {
         stage('Remove local images') {
             steps {
                 echo '=== Delete the local docker images ==='
-                sh(docker image ls)
+                sh("docker image ls")
                 // sh("docker rmi -f petclinic-spinnaker-jenkins:$SHORT_COMMIT || :")
             }
         }
